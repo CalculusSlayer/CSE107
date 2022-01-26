@@ -27,13 +27,41 @@ Hint(s):
 """
 
 def distribution_random():
-    pass
+    np.random.seed(0)
+    x_vals = np.arange(10000)
+    y_vals = np.random.random(10000)
+    for i in range(len(y_vals)):
+        y_vals[i] *= 10000
+    plt.scatter(x_vals, y_vals, s=2, color="red")
+    plt.title("np.random")
+    plt.xlabel("index")
+    plt.ylabel("random number")
+    # plt.show()
+    plt.savefig("random.png")
 
 def distribution_KISS():
-    pass
+    rng_kiss = sri.KISS(123958, 34987243, 3495825239, 2398172431)
+    x_vals = np.arange(10000)
+    y_vals = np.zeros(10000)
+    for i in range(len(y_vals)):
+        y_vals[i] = next(rng_kiss) % 10000
+    plt.scatter(x_vals, y_vals, s=2, color="green")
+    plt.title("sri.KISS")
+    plt.xlabel("index")
+    plt.ylabel("random number")
+    plt.savefig("kiss.png")
 
 def distribution_SHR3():
-    pass
+    rng_shr3 = sri.SHR3(3360276411)
+    x_vals = np.arange(10000)
+    y_vals = np.zeros(10000)
+    for i in range(len(y_vals)):
+        y_vals[i] = next(rng_shr3) % 10000
+    plt.scatter(x_vals, y_vals, s=2, color="purple")
+    plt.title("sri.SHR3")
+    plt.xlabel("index")
+    plt.ylabel("random number")
+    plt.savefig("shr3.png")
 
 def pingpong(n:int=21, p:float=0.3, ntrials:int=5000, seed:int=0):
     """
@@ -55,6 +83,19 @@ def pingpong(n:int=21, p:float=0.3, ntrials:int=5000, seed:int=0):
         #     which we're in now. You may want to implement this function!
         #     """
         pass # TODO: Your code here (10-20 lines)
+        my_score, cpu_score = 0, 0
+        np.random.seed(5)
+        while True:
+            outcome = np.random.random()
+            if outcome <= p:
+                my_score += 1
+            else:
+                cpu_score += 1
+
+            if my_score >= n and my_score - cpu_score >= 2:
+                return True
+            elif cpu_score >= n and cpu_score - my_score >= 2:
+                return False
 
 
 def plot_output():
@@ -82,6 +123,10 @@ def plot_output():
 
 
 if __name__ == '__main__':
+    distribution_random()
+    distribution_KISS()
+    distribution_SHR3()
+    #print(dir(np.random))
     pass
     # You can test out things here. Feel free to write anything below.
 
