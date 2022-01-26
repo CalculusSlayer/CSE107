@@ -39,6 +39,7 @@ def distribution_random():
     # plt.show()
     plt.savefig("random.png")
 
+
 def distribution_KISS():
     rng_kiss = sri.KISS(123958, 34987243, 3495825239, 2398172431)
     x_vals = np.arange(10000)
@@ -51,6 +52,7 @@ def distribution_KISS():
     plt.ylabel("random number")
     plt.savefig("kiss.png")
 
+
 def distribution_SHR3():
     rng_shr3 = sri.SHR3(3360276411)
     x_vals = np.arange(10000)
@@ -62,6 +64,7 @@ def distribution_SHR3():
     plt.xlabel("index")
     plt.ylabel("random number")
     plt.savefig("shr3.png")
+
 
 def pingpong(n:int=21, p:float=0.3, ntrials:int=5000, seed:int=0):
     """
@@ -84,7 +87,7 @@ def pingpong(n:int=21, p:float=0.3, ntrials:int=5000, seed:int=0):
         #     """
         pass # TODO: Your code here (10-20 lines)
         my_score, cpu_score = 0, 0
-        np.random.seed(5)
+
         while True:
             outcome = np.random.random()
             if outcome <= p:
@@ -94,8 +97,16 @@ def pingpong(n:int=21, p:float=0.3, ntrials:int=5000, seed:int=0):
 
             if my_score >= n and my_score - cpu_score >= 2:
                 return True
+            
             elif cpu_score >= n and cpu_score - my_score >= 2:
                 return False
+
+    np.random.seed(seed)
+    wins = 0
+    for x in range(ntrials):
+        if sim_one_game():
+            wins += 1
+    return wins / ntrials
 
 
 def plot_output():
@@ -120,13 +131,43 @@ def plot_output():
     """
     
     pass # TODO: Your code here (10-20 lines)
+    
+    current_p = 0
+    p_values = np.linspace(0.0, 1.0, 26)
+    n3 = np.zeros(26)
+    n11 = np.zeros(26)
+    n21 = np.zeros(26)
+
+    for i in range(26):
+        n3[i] = pingpong(n=3, p=current_p, ntrials=5000, seed=5)
+        n11[i] = pingpong(n=11, p=current_p, ntrials=5000, seed=5)
+        n21[i] = pingpong(n=21, p=current_p, ntrials=5000, seed=5)
+        current_p += 0.04
+
+    plt.plot(p_values, n3, color="seagreen", label="n=3")
+    plt.plot(p_values, n11, color="midnightblue", label="n=11")
+    plt.plot(p_values, n21, color="crimson", label="n=21")
+    plt.legend(loc="upper left")
+    plt.title("Relating P(win point) to P(win game)")
+    plt.xlabel("P(win point)")
+    plt.ylabel("P(win game)")
+    plt.savefig("pingpong.png")
 
 
 if __name__ == '__main__':
-    distribution_random()
-    distribution_KISS()
-    distribution_SHR3()
+    #distribution_random()
+    #distribution_KISS()
+    #distribution_SHR3()
     #print(dir(np.random))
+    #x2 = np.linspace(0.0, 1.0, 10)
+    #print(x2)
     pass
+    #print(pingpong(p=.45))
+    '''
+    np.random.seed(69)
+    for i in range(5):
+        print(np.random.random())
+    '''
+    plot_output()
     # You can test out things here. Feel free to write anything below.
 
