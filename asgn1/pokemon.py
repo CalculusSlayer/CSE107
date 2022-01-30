@@ -113,8 +113,7 @@ def part_d(filename:str='data/pokemon.txt', ntrials:int=5000):
     """
     data = np.genfromtxt(filename)[:, -2:]
     n_pokemon = data.shape[0]
-    #print(n_pokemon)
-    #print(data)
+
     def sim_one():
         """
         This is a nested function only accessible by parent 'part_d',
