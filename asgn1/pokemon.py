@@ -37,6 +37,9 @@ def part_a(filename:str='data/pokemon.txt'):
     2. Use np.mean(...) with its axis parameter to compute means in one line.
     """
     pass # TODO: Your code here (<= 3 lines)
+    data = np.genfromtxt(filename)
+    sol = np.mean(data, axis=0)
+    return sol[1:]
 
 def part_b(filename:str='data/pokemon.txt'):
     """
@@ -50,6 +53,12 @@ def part_b(filename:str='data/pokemon.txt'):
     2. Use np.where(...) to select only certain rows.
     """
     pass # TODO: Your code here (<= 5 lines)
+    data = np.genfromtxt(filename)
+    weight_median = np.median(data[:,3])
+    ab = [data[x] for x in np.where(data[:,3] > weight_median)][0]
+    return np.mean(ab, axis=0)[1:]
+
+
 
 def part_c(filename:str='data/pokemon.txt', ntrials:int=5000):
     """
@@ -72,8 +81,21 @@ def part_c(filename:str='data/pokemon.txt', ntrials:int=5000):
         which we're in now. You may want to implement this function!
         """
         pass
+        pokemons = data.shape(
+        encounters = 0
+        set1 = {num for num in range(pokemons)}
+        while set1:
+            set1.discard(np.random.choice(np.arange(pokemons), p=data))
+            encounters += 1
+        return encounters
 
     pass # TODO: Your code here (10-20 lines)
+    np.random.seed(1)
+    data = np.genfromtxt(filename)[:,4]
+    encounters_sum = 0
+    for i in range(ntrials):
+        encounters_sum += sim_one()
+    return encounters_sum/ntrials
 
 def part_d(filename:str='data/pokemon.txt', ntrials:int=5000):
     """
