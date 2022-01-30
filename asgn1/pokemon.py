@@ -80,8 +80,6 @@ def part_c(filename:str='data/pokemon.txt', ntrials:int=5000):
         This is a nested function only accessible by parent 'part_c',
         which we're in now. You may want to implement this function!
         """
-        pass
-        pokemons = data.shape(
         encounters = 0
         set1 = {num for num in range(pokemons)}
         while set1:
@@ -92,6 +90,7 @@ def part_c(filename:str='data/pokemon.txt', ntrials:int=5000):
     pass # TODO: Your code here (10-20 lines)
     np.random.seed(1)
     data = np.genfromtxt(filename)[:,4]
+    pokemons = len(data)
     encounters_sum = 0
     for i in range(ntrials):
         encounters_sum += sim_one()
@@ -114,15 +113,29 @@ def part_d(filename:str='data/pokemon.txt', ntrials:int=5000):
     """
     data = np.genfromtxt(filename)[:, -2:]
     n_pokemon = data.shape[0]
-
+    #print(n_pokemon)
+    #print(data)
     def sim_one():
         """
         This is a nested function only accessible by parent 'part_d',
         which we're in now. You may want to implement this function!
         """
-        pass
+        encounters = 0
+        set1 = {num for num in range(n_pokemon)}
+        while set1:
+            some_pokemon = np.random.choice(np.arange(n_pokemon), p=data[:,0])
+            if np.random.rand() <= data[some_pokemon][1]:
+                set1.discard(some_pokemon)
+            encounters += 1
+        return encounters
     
     pass # TODO: Your code here (10-20 lines)
+    np.random.seed(1)
+    encounters_sum2 = 0
+    for i in range(ntrials):
+        encounters_sum2 += sim_one()
+    return encounters_sum2/ntrials
+
 
 if __name__ == '__main__':
     # You can test out things here. Feel free to write anything below.
