@@ -38,6 +38,7 @@ def distribution_random():
     plt.ylabel("random number")
     # plt.show()
     plt.savefig("random.png")
+    plt.clf()
 
 
 def distribution_KISS():
@@ -51,7 +52,7 @@ def distribution_KISS():
     plt.xlabel("index")
     plt.ylabel("random number")
     plt.savefig("kiss.png")
-
+    plt.clf()
 
 def distribution_SHR3():
     rng_shr3 = sri.SHR3(3360276411)
@@ -64,7 +65,7 @@ def distribution_SHR3():
     plt.xlabel("index")
     plt.ylabel("random number")
     plt.savefig("shr3.png")
-
+    plt.clf()
 
 def pingpong(n:int=21, p:float=0.3, ntrials:int=5000, seed:int=0):
     """
@@ -152,12 +153,12 @@ def plot_output():
     plt.xlabel("P(win point)")
     plt.ylabel("P(win game)")
     plt.savefig("pingpong.png")
-
+    plt.clf()
 
 if __name__ == '__main__':
-    #distribution_random()
-    #distribution_KISS()
-    #distribution_SHR3()
+    distribution_random()
+    distribution_KISS()
+    distribution_SHR3()
     #print(dir(np.random))
     #x2 = np.linspace(0.0, 1.0, 10)
     #print(x2)
@@ -171,3 +172,4 @@ if __name__ == '__main__':
     plot_output()
     # You can test out things here. Feel free to write anything below.
 
+    # print(pingpong())
