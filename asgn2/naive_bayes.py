@@ -138,13 +138,21 @@ class NaiveBayes():
             to avoid writing the same code for self.word_counts_spam and
             self.word_counts_ham!
             """
+            dict1 = {}
             for file in filenames:
-                self.
-            pass
+                set1 = self.word_set(file)
+                for word in set1:
+                    if word in dict1:
+                        dict1[word] += 1
+                    else:
+                        dict1[word] = 1
+            return dict1
 
         pass # TODO: Your code here (10-20 lines)
-    self.num_train_hams = get_counts(train_hams)
-    self.num_train_spams = get_counts(train_spams)
+        self.num_train_hams = len(train_hams)
+        self.num_train_spams = len(train_spams)
+        self.word_counts_spam = get_counts(train_spams)
+        self.word_counts_ham = get_counts(train_hams)
 
     def predict(self, filename:str):
         """
@@ -174,7 +182,25 @@ class NaiveBayes():
         Access those variables with a 'self' prefix, like self.num_train_hams.
         """
         pass # TODO: Your code here (10-20 lines)
-            
+        p_ham = self.num_train_hams/(self.num_train_hams + self.num_train_spams)
+        p_spam = self.num_train_spams/(self.num_train_hams + self.num_train_spams)
+
+        spam_sum = 0
+        ham_sum = 0
+        set2 = self.word_set(filename)
+        for word in set2:
+            spam_sum += np.log((self.word_counts_spam.get(word, 0)+1)/(self.num_train_spams+2))
+
+        for word in set2:
+            ham_sum += np.log((self.word_counts_ham.get(word, 0)+1)/(self.num_train_hams+2))
+
+        spam_sum += np.log(p_spam)
+        ham_sum += np.log(p_ham)
+
+        if spam_sum > ham_sum:
+            return self.SPAM_LABEL
+        else:
+            return self.HAM_LABEL
 
     def accuracy(self, hams:list, spams:list):
         """
