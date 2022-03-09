@@ -1,16 +1,3 @@
-# python code for project naive bayes classifier
-# in CSE 107 in 2022 winter, UC Santa Cruz
-
-# Student Name: Nayeel Imtiaz
-# UW Email    : naimtiaz@ucsc.edu
-
-# =============================================================
-# You may define helper functions, but DO NOT MODIFY
-# the parameters or names of the provided functions.
-
-# Do NOT add any import statements.
-# =============================================================
-
 import numpy as np
 import os
 
@@ -18,10 +5,8 @@ import os
 # Inside the 'data' folder, the emails are separated into 'train' 
 # and 'test' data. Each of these folders has nested 'spam' and 'ham'
 # folders, each of which has a collection of emails as txt files.
-# You will only use the emails in the 'train' folder to train your 
-# classifier, and will evaluate on the 'test' folder.
         
-# The emails we are using are a subset of the Enron Corpus,
+# The emails used are a subset of the Enron Corpus,
 # which is a set of real emails from employees at an energy
 # company. The emails have a subject line and a body, both of
 # which are 'tokenized' so that each unique word or bit of
@@ -34,14 +19,9 @@ class NaiveBayes():
     """
     This is a Naive Bayes spam filter, that learns word spam probabilities 
     from our pre-labeled training data and then predicts the label (ham or spam) 
-    of a set of emails that it hasn't seen before. See the handout from section 2
-    for details on implementation!
+    of a set of emails that it hasn't seen before.
     """
     def __init__(self):
-        """
-        These variables are described in the 'fit' function below. 
-        You will also need to access them in the 'predict' function.
-        """
         self.num_train_hams = 0
         self.num_train_spams = 0
         self.word_counts_spam = {}
@@ -52,8 +32,7 @@ class NaiveBayes():
     def load_data(self, path:str='data/'):
         """
         This function loads all the train and test data and returns
-        the filenames as lists. You do not need to worry about how this
-        function works unless you're curious.
+        the filenames as lists.
 
         :param path: Expects a path such that inside are two folders:
         'train' and 'test'. Each of these two folders should have a 'spam' and
@@ -124,20 +103,9 @@ class NaiveBayes():
         is the number of spam emails which contained this word. 
         4. self.word_counts_ham is a DICTIONARY where word_counts_ham[word]
         is the number of ham emails which contained this word. 
-
-        Hint(s):
-        1. You may want to use the self.word_set function provided.
-        2. You should not worry about Laplace smoothing or anything here:
-        simply make sure your counts are correct from the data you're given.
         """
-        
+
         def get_counts(filenames:list):
-            """
-            This is a nested function only accessible by parent 'fit',
-            which we're in now. You may want to implement this function
-            to avoid writing the same code for self.word_counts_spam and
-            self.word_counts_ham!
-            """
             dict1 = {}
             for file in filenames:
                 set1 = self.word_set(file)
@@ -148,7 +116,6 @@ class NaiveBayes():
                         dict1[word] = 1
             return dict1
 
-        pass # TODO: Your code here (10-20 lines)
         self.num_train_hams = len(train_hams)
         self.num_train_spams = len(train_spams)
         self.word_counts_spam = get_counts(train_spams)
@@ -159,29 +126,8 @@ class NaiveBayes():
         :param filename: The filename of an email to classify.
         :return: The prediction of our Naive Bayes classifier. This
         should either return self.HAM_LABEL or self.SPAM_LABEL.
-
-        Guidelines:
-        1. Make sure to use the log-trick to avoid underflow.
-        2. Make sure for Laplace smoothing you use +1 in numerator 
-        and +2 in denominator. This is even for words you haven't seen before
-        in the training data, which would otherwise have 0 probability.
-        3. Do not 'cheat' - meaning looking up the true label. We will
-        test your code on a dataset you don't have access to. Remember,
-        the goal is not 100% accuracy - a correct implementation will get
-        exactly a certain accuracy.
-        4. In case of a tie, predict 'self.HAM_LABEL'.
-        5. Do NOT apply Laplace smoothing to P(ham) and P(spam).
-
-        Hint(s):
-        1. You may want to use the self.word_set function provided.
-        2. Use np.log(...) to take logs.
-        3. For a dictionary d, d[key] returns the value if the key exists.
-        But if it doesn't, you get an error. To simplify your code,
-        d.get(key, 0) will return d[key] if it exists, otherwise 0. 
-        4. You'll want to use the values you set during the fit function.
-        Access those variables with a 'self' prefix, like self.num_train_hams.
         """
-        pass # TODO: Your code here (10-20 lines)
+
         p_ham = self.num_train_hams/(self.num_train_hams + self.num_train_spams)
         p_spam = self.num_train_spams/(self.num_train_hams + self.num_train_spams)
 
